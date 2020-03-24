@@ -24,8 +24,8 @@ public class Model {
 		this.fermate = dao.getAllFermate();
 		Graphs.addAllVertices(this.grafo, this.fermate);//per Graphs, v. Tempo 1:09:30 della lez. 23
 	
-		//Aggiungi gli archi
-		for(Fermata partenza : this.grafo.vertexSet()) {
+		//Aggiungi gli archi (opzione 1)
+	/*	for(Fermata partenza : this.grafo.vertexSet()) {
 			for(Fermata arrivo : this.grafo.vertexSet()) {
 				
 				if(dao.esisteConnessione(partenza, arrivo)) {
@@ -34,8 +34,17 @@ public class Model {
 				
 			}
 		}
-		
+	*/	
+		//Aggiungi gli archi (opzione 2)
+		for(Fermata partenza : this.grafo.vertexSet()) {
+			List<Fermata> arrivi = dao.stazioniArrivo(partenza);
 			
+			for(Fermata arrivo : arrivi)
+				this.grafo.addEdge(partenza, arrivo);
+		}
+		
+		// Aggiungi gli archi (opzione 3)
+		
 	}
 
 	public Graph<Fermata, DefaultEdge> getGrafo() {

@@ -100,5 +100,32 @@ public class MetroDAO {
 		return linee;
 	}
 
+	public List<Fermata> stazioniArrivo(Fermata partenza) {
+		String sql = "SELECT id_stazA " +
+				"FROM connessione " +
+				"WHERE id_stazP=?" ; 
+		
+		Connection conn = DBConnect.getConnection();
+		try {
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setInt(1, partenza.getIdFermata());
+			ResultSet rs = st.executeQuery();
+			
+			List<Fermata> result = new ArrayList<>();
+			
+			while(rs.next()) {
+				result.add(new Fermata(rs.getInt("id_stazA"), null, null));
+			}
+			
+			conn.close();//ricordarsi sempre di chiudere connessione
+			return result;
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+
 
 }
