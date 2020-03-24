@@ -40,6 +40,38 @@ public class MetroDAO {
 
 		return fermate;
 	}
+	
+	public boolean esisteConnessione(Fermata partenza, Fermata arrivo) {
+		
+		String sql = "SELECT COUNT(*) AS cnt" +
+				" FROM connessione" +
+				" WHERE id_stazP=?\n " +
+				" AND id_stazA=?";
+		
+		Connection conn = DBConnect.getConnection();
+		PreparedStatement st;
+		try{
+			st = conn.prepareStatement(sql);
+			st.setInt(1, partenza.getIdFermata());
+			st.setInt(2, arrivo.getIdFermata());
+			
+			ResultSet rs = st.executeQuery();
+			
+			rs.next(); // mi posizione sulla prima (e unica) riga
+			
+			int numero = rs.getInt("cnt");
+			
+			conn.close(); // restituisco la connessione al pooling (vedi lez. precedente)
+			
+			return (numero > 0);
+			
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
 
 	public List<Linea> getAllLinee() {
 		final String sql = "SELECT id_linea, nome, velocita, intervallo FROM linea ORDER BY nome ASC";
