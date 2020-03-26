@@ -21,7 +21,7 @@ public class TestModel {
 		System.out.println("Numero delle fermate: " + raggiungibili.size());
 
 		Fermata target = m.getFermate().get(150);
-		System.out.println("Arrivo a: " + target);
+		System.out.println("Percorso " + source + " -> " + target + ":");
 		
 		List<Fermata> percorso = m.percorsoFinoA(target);
 		System.out.println(percorso);
