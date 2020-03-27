@@ -10,6 +10,7 @@ import java.util.Map;
 
 import com.javadocmd.simplelatlng.LatLng;
 
+import it.polito.tdp.metroparis.model.ConnessioneVelocita;
 import it.polito.tdp.metroparis.model.Fermata;
 import it.polito.tdp.metroparis.model.Linea;
 
@@ -41,36 +42,32 @@ public class MetroDAO {
 
 		return fermate;
 	}
-	
+
 	public boolean esisteConnessione(Fermata partenza, Fermata arrivo) {
-		
-		String sql = "SELECT COUNT(*) AS cnt" +
-				" FROM connessione" +
-				" WHERE id_stazP=?\n " +
-				" AND id_stazA=?";
-		
+
+		String sql = "SELECT COUNT(*) AS cnt" + " FROM connessione" + " WHERE id_stazP=?\n " + " AND id_stazA=?";
+
 		Connection conn = DBConnect.getConnection();
 		PreparedStatement st;
-		try{
+		try {
 			st = conn.prepareStatement(sql);
 			st.setInt(1, partenza.getIdFermata());
 			st.setInt(2, arrivo.getIdFermata());
-			
+
 			ResultSet rs = st.executeQuery();
-			
+
 			rs.next(); // mi posizione sulla prima (e unica) riga
-			
+
 			int numero = rs.getInt("cnt");
-			
+
 			conn.close(); // restituisco la connessione al pooling (vedi lez. precedente)
-			
+
 			return (numero > 0);
-			
-			
-		}catch(SQLException e) {
+
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return false;
 	}
 
@@ -102,30 +99,56 @@ public class MetroDAO {
 	}
 
 	public List<Fermata> stazioniArrivo(Fermata partenza, Map<Integer, Fermata> idMap) {
-		String sql = "SELECT id_stazA " +
-				"FROM connessione " +
-				"WHERE id_stazP=?" ; 
-		
+		String sql = "SELECT id_stazA " + "FROM connessione " + "WHERE id_stazP=?";
+
 		Connection conn = DBConnect.getConnection();
 		try {
 			PreparedStatement st = conn.prepareStatement(sql);
 			st.setInt(1, partenza.getIdFermata());
 			ResultSet rs = st.executeQuery();
-			
+
 			List<Fermata> result = new ArrayList<>();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				result.add(idMap.get(rs.getInt("id_stazA")));
 			}
-			
-			conn.close();//ricordarsi sempre di chiudere connessione
+
+			conn.close();// ricordarsi sempre di chiudere connessione
 			return result;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
-		
+
 	}
 
+	// Lista di oggetti che restituicano staz._partenza, staz.-arrrivo e velocità
+	public List<ConnessioneVelocita> getConnessionieVelocita() {
+		String sql = "SELECT connessione.id_stazP, " + "connessione.id_stazA, MAX(linea.velocita) AS velocita "
+				+ "FROM connessione, linea " + "WHERE connessione.id_linea=linea.id_linea "
+				+ "GROUP BY connessione.id_stazP, " + "connessione.id_stazA";
 
+		Connection conn = DBConnect.getConnection();
+
+		try {
+			PreparedStatement st = conn.prepareStatement(sql);
+			ResultSet res = st.executeQuery();
+
+			List<ConnessioneVelocita> result = new ArrayList<>();
+			while (res.next()) {
+				ConnessioneVelocita item = new ConnessioneVelocita(
+						res.getInt("id_stazP"), res.getInt("id_stazA"),
+						res.getDouble("velocita"));
+				result.add(item);
+			}
+
+			conn.close();
+
+			return result;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

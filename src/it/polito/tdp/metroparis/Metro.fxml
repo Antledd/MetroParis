@@ -1,61 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.collections.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="433.00007792968245" prefWidth="370.9998558593725" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="it.polito.tdp.metroparis.MetroController">
-  <!-- TODO Add Nodes -->
-  <center>
-    <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.margin="$x2">
-      <children>
-        <HBox prefHeight="30.0" prefWidth="200.0">
-          <children>
-            <Label text="Partenza">
-              <HBox.margin>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" fx:id="x1" />
-              </HBox.margin>
-            </Label>
-            <ComboBox prefHeight="21.0" prefWidth="103.0">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
-              </items>
-              <HBox.margin>
-                <Insets top="5.0" fx:id="x2" />
-              </HBox.margin>
-            </ComboBox>
-          </children>
-        </HBox>
-        <HBox prefHeight="30.0" prefWidth="200.0">
-          <children>
-            <Label text="Arrivo" HBox.margin="$x1" />
-            <ComboBox prefHeight="21.0" prefWidth="103.0">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
-              </items>
-              <HBox.margin>
-                <Insets bottom="5.0" left="12.0" right="5.0" top="5.0" />
-              </HBox.margin>
-            </ComboBox>
-            <Button fx:id="btnCerca" mnemonicParsing="false" onAction="#doCerca" text="Cerca" HBox.margin="$x1" />
-          </children>
-        </HBox>
-        <TextArea prefHeight="338.0" prefWidth="371.0" wrapText="true" />
-      </children>
-    </VBox>
-  </center>
-  <top>
-    <Label text="Visite nei grafi" BorderPane.alignment="CENTER" />
-  </top>
+<BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.tdp.metroparis.MetroController">
+   <top>
+      <Label text="Visite nei grafi" BorderPane.alignment="CENTER" />
+   </top>
+   <center>
+      <VBox spacing="5.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <Label minWidth="80.0" text="Partenza" />
+                  <ComboBox fx:id="boxPartenza" prefWidth="200.0" promptText="Fermata di partenza..." />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <Label minWidth="80.0" text="Arrivo" />
+                  <ComboBox fx:id="boxArrivo" prefWidth="200.0" promptText="Fermata di arrivo..." />
+                  <Button mnemonicParsing="false" onAction="#handleCerca" text="Cerca">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <TextArea fx:id="txtResult" editable="false" />
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
 </BorderPane>
