@@ -1,7 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-	
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
-	
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.tdp.metroparis.MetroController">
-	<!-- TODO Add Nodes -->
+
+<BorderPane prefHeight="433.00007792968245" prefWidth="370.9998558593725" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="it.polito.tdp.metroparis.MetroController">
+  <!-- TODO Add Nodes -->
+  <center>
+    <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.margin="$x2">
+      <children>
+        <HBox prefHeight="30.0" prefWidth="200.0">
+          <children>
+            <Label text="Partenza">
+              <HBox.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" fx:id="x1" />
+              </HBox.margin>
+            </Label>
+            <ComboBox prefHeight="21.0" prefWidth="103.0">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
+                </FXCollections>
+              </items>
+              <HBox.margin>
+                <Insets top="5.0" fx:id="x2" />
+              </HBox.margin>
+            </ComboBox>
+          </children>
+        </HBox>
+        <HBox prefHeight="30.0" prefWidth="200.0">
+          <children>
+            <Label text="Arrivo" HBox.margin="$x1" />
+            <ComboBox prefHeight="21.0" prefWidth="103.0">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
+                </FXCollections>
+              </items>
+              <HBox.margin>
+                <Insets bottom="5.0" left="12.0" right="5.0" top="5.0" />
+              </HBox.margin>
+            </ComboBox>
+            <Button fx:id="btnCerca" mnemonicParsing="false" onAction="#doCerca" text="Cerca" HBox.margin="$x1" />
+          </children>
+        </HBox>
+        <TextArea prefHeight="338.0" prefWidth="371.0" wrapText="true" />
+      </children>
+    </VBox>
+  </center>
+  <top>
+    <Label text="Visite nei grafi" BorderPane.alignment="CENTER" />
+  </top>
 </BorderPane>
