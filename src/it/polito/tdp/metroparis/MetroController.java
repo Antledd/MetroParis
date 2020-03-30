@@ -34,6 +34,7 @@ public class MetroController {
     
     @FXML
     void handleCerca(ActionEvent event) {
+    	txtResult.clear(); 
     	Fermata partenza = boxPartenza.getValue();
     	Fermata arrivo = boxArrivo.getValue();
     	
